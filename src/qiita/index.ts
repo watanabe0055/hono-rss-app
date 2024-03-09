@@ -4,9 +4,10 @@ import { QIITA } from "../constants/qiita";
 const app = new Hono();
 
 app.get("/", (c) => {
-  const tags = c.req.query("page");
+  const page = c.req.query("page");
+  const pageParam = page === undefined ? "1" : page;
 
-  const fetchData = fetch(QIITA.URL);
+  const fetchData = fetch(`${QIITA.URL}/?page=${pageParam}`);
   return fetchData;
 });
 
