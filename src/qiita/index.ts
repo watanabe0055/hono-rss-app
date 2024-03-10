@@ -1,13 +1,16 @@
 import { Hono } from "hono";
 import { QIITA } from "../constants/qiita";
+import { createQiitaQuery } from "./lib";
 
 const app = new Hono();
 
 app.get("/", (c) => {
-  const page = c.req.query("page");
-  const pageParam = page === undefined ? "1" : page;
+  const req = c.req;
+  const { pageParam, prePage } = createQiitaQuery(req);
 
-  const fetchData = fetch(`${QIITA.URL}/?page=${pageParam}`);
+  const fetchData = fetch(
+    `${QIITA.URL}/?page=${pageParam}&per_page=${prePage}`
+  );
   return fetchData;
 });
 
