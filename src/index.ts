@@ -8,4 +8,8 @@ app.use("*", prettyJSON());
 
 app.route("/v1", v1);
 
+app.notFound((c) => {
+  return c.text("Custom 404 Message", 404);
+});
+
 export default app;
